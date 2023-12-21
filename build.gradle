@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.2' //스프링 부트 플러그인 추가
+    id 'io.spring.dependency-management' version '1.1.0' //의존성 관리 플러그인
+}
+
+group = 'me.thirdDuck' //기본그룹이름
+version = '1.0' //기본 버전
+sourceCompatibility ='17' //컴파일시 사용할 자바버전
+
+repositories {
+    mavenCentral() //의존성을 받을 저장소
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web' // 웹관련기능 제공하는 의존성
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' //테스트기능 제공하는 의존성
+
+    //스프링 데이터 JPA : 데이터베이스의 테이블을 객체로 바꿔서 가져오는 도구들
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:'
+    testImplementation 'junit:junit:4.13.1'//JPA 기본
+    runtimeOnly'com.h2database:h2' //로컬환경, 테스트 환경에서 사용할 인메모리 DB
+    compileOnly'org.projectlombok:lombok' // 롬복
+    annotationProcessor'org.projectlombok:lombok' //롬복 어노테이션화
+}
+
+test {
+    useJUnitPlatform()
+}
