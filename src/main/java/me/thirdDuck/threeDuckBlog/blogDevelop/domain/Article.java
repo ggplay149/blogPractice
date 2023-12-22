@@ -19,7 +19,7 @@ public class Article {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "content", nullable = false)
     private String content;
 
     @Builder//빌더패던으로 생성가능하게 해줌줌

@@ -1,8 +1,6 @@
 
 ?
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
-v
-Fsrc/main/java/me/thirdDuck/threeDuckBlog/threeDuckBlogApplication.java,4\0\40b5dd5280c8c7b295c9bb7e13dda045649a336f
 Q
 !src/test/java/JUnitCycleTest.java,5\7\57205b63e8748e1b20e078ddb20d3eaee835e0e1
 L
