@@ -1,4 +1,4 @@
-package me.thirdDuck.threeDuckBlog.service;
+package me.thirdDuck.threeDuckBlog.blogDevelop.service;
 
 import lombok.RequiredArgsConstructor;
 import me.thirdDuck.threeDuckBlog.blogDevelop.domain.Article;
@@ -22,5 +22,10 @@ public class BlogService {
     //블로그 글 목록 조회 메서드
     public List<Article> articleList(){
         return blogRepository.findAll();
+    }
+
+    //블로그 글 삭제 메서드
+    public void delete(long id){
+        blogRepository.deleteById(id);
     }
 }

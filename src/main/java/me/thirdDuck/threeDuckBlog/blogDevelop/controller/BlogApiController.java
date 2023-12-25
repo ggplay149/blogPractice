@@ -1,17 +1,13 @@
-package me.thirdDuck.threeDuckBlog.controller;
+package me.thirdDuck.threeDuckBlog.blogDevelop.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.thirdDuck.threeDuckBlog.blogDevelop.domain.Article;
 import me.thirdDuck.threeDuckBlog.blogDevelop.dto.AddArticelRequest;
 import me.thirdDuck.threeDuckBlog.blogDevelop.dto.ArticleResponse;
-import me.thirdDuck.threeDuckBlog.blogDevelop.repository.BlogRepository;
-import me.thirdDuck.threeDuckBlog.service.BlogService;
+import me.thirdDuck.threeDuckBlog.blogDevelop.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +30,11 @@ public class BlogApiController{
                 .map(ArticleResponse::new)
                 .toList();
         return ResponseEntity.status(HttpStatus.CREATED).body(articleList); //요청상태가 성공적일때, 이후 수행
+    }
+
+    @DeleteMapping("api/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id){
+        blogService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
