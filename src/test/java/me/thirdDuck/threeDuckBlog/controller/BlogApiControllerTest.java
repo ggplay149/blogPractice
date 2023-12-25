@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -52,12 +53,10 @@ class BlogApiControllerTest {
     public void addArticle() throws Exception{
 
         //given
-
         final String url = "/api/articles";
         final String title = "오리테스트";
         final String content = "에슐리 먹고싶다.";
         final AddArticelRequest userRequest = new AddArticelRequest(title,content); //입력값 dto 에 담기
-
         // 객체를  JSON으로 직렬화
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
@@ -66,15 +65,31 @@ class BlogApiControllerTest {
         ResultActions result = mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestBody));
-
         //then
         result.andExpect(status().isCreated());
         List<Article> articles = blogRepository.findAll();
-
         assertThat(articles.size()).isEqualTo(1);
         assertThat(articles.get(0).getTitle()).isEqualTo(title);
         assertThat(articles.get(0).getContent()).isEqualTo(content);
-
     }
 
+    @DisplayName("삭제 테스트")
+    @Test
+    public void deleteTest() throws Exception {
+        //given
+        final String url = "/api/delete/{id}";
+        final String title = "삭제테스트 타이틀";
+        final String content = "삭제테스트 콘텐츠";
+
+        Article savedArticle = blogRepository.save(Article.builder().title(title).content(content).build());
+
+        //when
+        mockMvc.perform(delete(url,savedArticle.getId())).andExpect(status().isOk());
+
+        //then
+        List<Article> articles = blogRepository.findAll();
+
+        assertThat(articles).isEmpty();
+
+    }
 }
