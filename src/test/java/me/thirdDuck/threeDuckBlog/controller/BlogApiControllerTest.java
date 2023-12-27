@@ -3,6 +3,7 @@ package me.thirdDuck.threeDuckBlog.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.thirdDuck.threeDuckBlog.blogDevelop.domain.Article;
 import me.thirdDuck.threeDuckBlog.blogDevelop.dto.AddArticelRequest;
+import me.thirdDuck.threeDuckBlog.blogDevelop.dto.UpdateArticleRequest;
 import me.thirdDuck.threeDuckBlog.blogDevelop.repository.BlogRepository;
 
 
@@ -14,15 +15,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest//테스트용 어플리케이션 컨텍스트
@@ -90,6 +89,33 @@ class BlogApiControllerTest {
         List<Article> articles = blogRepository.findAll();
 
         assertThat(articles).isEmpty();
+    }
+
+    @DisplayName("블로그 글 수정")
+    @Test
+    public void updateTest() throws Exception{
+
+        final String oldTitle = "아배고파";
+        final String oldContent = "넘배고파";
+
+       Article savedArticle = blogRepository.save(Article.builder().title(oldTitle).content(oldContent).build());
+
+        final String newUrl = "/api/update/{id}";
+        final String newTitle = "새로운";
+        final String newContent = "수정사항";
+
+        UpdateArticleRequest request = new UpdateArticleRequest(newTitle,newContent);
+
+        ResultActions result = mockMvc.perform(put(newUrl,savedArticle.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)));
+
+
+        result.andExpect(status().isOk());
+        Article article = blogRepository.findById(savedArticle.getId()).get();
+
+        assertThat(article.getTitle()).isEqualTo(newTitle);
+        assertThat(article.getContent()).isEqualTo(newContent);
 
     }
 }

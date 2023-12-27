@@ -3,8 +3,10 @@ package me.thirdDuck.threeDuckBlog.blogDevelop.service;
 import lombok.RequiredArgsConstructor;
 import me.thirdDuck.threeDuckBlog.blogDevelop.domain.Article;
 import me.thirdDuck.threeDuckBlog.blogDevelop.dto.AddArticelRequest;
+import me.thirdDuck.threeDuckBlog.blogDevelop.dto.UpdateArticleRequest;
 import me.thirdDuck.threeDuckBlog.blogDevelop.repository.BlogRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,5 +29,14 @@ public class BlogService {
     //블로그 글 삭제 메서드
     public void delete(long id){
         blogRepository.deleteById(id);
+    }
+
+    //블로그 글 수정 메서드
+    @Transactional
+    public Article update(long id, UpdateArticleRequest request){
+        Article article = blogRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("not found : " + id));
+        article.update(request.getTitle(), request.getContent());
+        return article;
     }
 }

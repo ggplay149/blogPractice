@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.thirdDuck.threeDuckBlog.blogDevelop.domain.Article;
 import me.thirdDuck.threeDuckBlog.blogDevelop.dto.AddArticelRequest;
 import me.thirdDuck.threeDuckBlog.blogDevelop.dto.ArticleResponse;
+import me.thirdDuck.threeDuckBlog.blogDevelop.dto.UpdateArticleRequest;
 import me.thirdDuck.threeDuckBlog.blogDevelop.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,12 @@ public class BlogApiController{
     public ResponseEntity<Void> delete(@PathVariable long id){
         blogService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("api/update/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable long id,
+                                                 @RequestBody UpdateArticleRequest request){
+        Article updatedArticle = blogService.update(id,request);
+        return ResponseEntity.ok().body(updatedArticle);
     }
 }
