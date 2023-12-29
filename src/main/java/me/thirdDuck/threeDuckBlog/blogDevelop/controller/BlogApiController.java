@@ -24,22 +24,22 @@ public class BlogApiController{
         return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);    //요청상태가 성공적일때, 이후 수행
     }
 
-    @GetMapping("/api/articleList")
+    @GetMapping("/api/articles")
     public ResponseEntity< List<ArticleResponse>> articleList(){
-        List<ArticleResponse> articleList = blogService.articleList()
+        List<ArticleResponse> articleList = blogService.findAll()
                 .stream()
                 .map(ArticleResponse::new)
                 .toList();
         return ResponseEntity.status(HttpStatus.CREATED).body(articleList); //요청상태가 성공적일때, 이후 수행
     }
 
-    @DeleteMapping("api/delete/{id}")
+    @DeleteMapping("api/articles/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id){
         blogService.delete(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("api/update/{id}")
+    @PutMapping("api/articles/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable long id,
                                                  @RequestBody UpdateArticleRequest request){
         Article updatedArticle = blogService.update(id,request);

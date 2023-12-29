@@ -22,7 +22,7 @@ public class BlogService {
     }
 
     //블로그 글 목록 조회 메서드
-    public List<Article> articleList(){
+    public List<Article> findAll(){
         return blogRepository.findAll();
     }
 
@@ -38,5 +38,10 @@ public class BlogService {
                 .orElseThrow(()->new IllegalArgumentException("not found : " + id));
         article.update(request.getTitle(), request.getContent());
         return article;
+    }
+    //블로그 글 조회 메서드
+    public Article findById(long id) {
+        return blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
     }
 }
