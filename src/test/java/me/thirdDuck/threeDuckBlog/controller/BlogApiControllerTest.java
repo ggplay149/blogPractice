@@ -100,7 +100,7 @@ class BlogApiControllerTest {
 
        Article savedArticle = blogRepository.save(Article.builder().title(oldTitle).content(oldContent).build());
 
-        final String newUrl = "/api/update/{id}";
+        final String newUrl = "/api/articles/{id}";
         final String newTitle = "새로운";
         final String newContent = "수정사항";
 
