@@ -1,7 +1,6 @@
 package me.thirdDuck.threeDuckBlog.blogDevelop.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Table(name ="users")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
 @Entity
 public class User implements UserDetails {
@@ -57,25 +56,25 @@ public class User implements UserDetails {
     //계정 만료 여부 반환
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     //계정 잠금 여부 반환
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     //패스워드의 만료 여부 반환
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     //계정 사용가능 여부 반환
     @Override
     public boolean isEnabled() {
         //계정이 사용가능한지 확인하는 로직
-        return false; //true -> 사용가능
+        return true; //true -> 사용가능
     }
 }

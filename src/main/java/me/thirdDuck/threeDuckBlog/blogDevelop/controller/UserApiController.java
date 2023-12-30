@@ -9,8 +9,11 @@ import me.thirdDuck.threeDuckBlog.blogDevelop.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Controller
@@ -29,5 +32,15 @@ public class UserApiController {
         new SecurityContextLogoutHandler().logout(request,response
         , SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/login";
+    }
+
+    @GetMapping("/auth/login")
+    public String login(@RequestParam(value = "error", required = false) String error,
+                        @RequestParam(value = "exception", required = false) String exception,
+                        Model model) {
+        /* 에러와 예외를 모델에 담아 view resolve */
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+        return "/login";
     }
 }

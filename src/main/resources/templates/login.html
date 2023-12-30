@@ -37,6 +37,9 @@
                 </div>
             </div>
         </div>
+        <div th:if="error">
+            <p id="valid" style="color: red; font-size:12px;"><a th:text="${exception}"></a></p>
+        </div>
     </div>
 </section>
 </body>
