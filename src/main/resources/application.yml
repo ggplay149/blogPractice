@@ -17,3 +17,7 @@ spring :
     console:
       enabled: true
 
+#JWT 사용을 위한 이슈발급자와, 비밀키
+jwt:
+  issuer: ajufresh@gmail.com
+  secret_key: study-springboot
