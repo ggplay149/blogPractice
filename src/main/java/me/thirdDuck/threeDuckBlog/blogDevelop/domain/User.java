@@ -28,11 +28,22 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "nickname", unique = true)
+    private String nickname;
+
+    //생성자에 nickname 추가
     @Builder
-    public User(String email, String password, String auth){
+    public User(String email, String password, String auth,String nickname){
         this.email=email;
         this.password=password;
+        this.nickname=nickname;
     }
+
+    public User update(String nickname){
+        this.nickname = nickname;
+        return this;
+    }
+
     /* 시큐리티 관련*/
 
     //사용자가 가지고 있는 권한 반환
