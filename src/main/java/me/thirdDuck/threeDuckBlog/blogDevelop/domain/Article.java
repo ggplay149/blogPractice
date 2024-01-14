@@ -35,8 +35,14 @@ public class Article {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name="author", nullable = false)
+    private String author;
+
+
+
     @Builder//빌더패던으로 생성가능하게 해줌줌
-    public Article(String title, String content){
+    public Article(String author, String title, String content){
+        this.author = author;
         this.title = title;
         this.content = content;
     }
